@@ -1,5 +1,5 @@
 import { Award } from "./award.model";
-import { get, map } from "lodash";
+import { get, map, orderBy } from "lodash";
 import * as dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { baseUrl } from '../api/reddit.service';
@@ -48,7 +48,7 @@ export class Post {
     }
 
     private MapAwards(awards: Array<any>): Array<Award> {
-        return map(awards, (award: any) => new Award(award));
+        return orderBy(map(awards, (award: any) => new Award(award)), ['awardedCount'], ['desc']);
     }
 
     public getDateString(): string {
