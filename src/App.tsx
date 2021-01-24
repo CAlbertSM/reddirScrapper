@@ -8,7 +8,6 @@ const { Header, Footer, Content } = Layout;
 
 const StyledLayout = styled(Layout)`
   height: 100vh;
-  width: 100vw;
 `;
 
 
