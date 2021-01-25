@@ -1,3 +1,10 @@
+# /r/ProgrammerHumor Topic Scrapper
+
+Simple React app to scrapp /r/ProgrammerHumor Top20 topics and sort them by comments, you can click the title to navigate to the post; click on the author, to navigate to the author page or click on the thumbnail to see the post's image.
+
+The application is deployed to [Heroku](https://programmer-humer-scrapper.herokuapp.com/).
+**Note: The app will fail to load the data if the tracking feature of your browser is on, turn it off to allow loading the topics.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
