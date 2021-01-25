@@ -1,9 +1,23 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { act } from 'react-dom/test-utils';
 
-test('renders learn react link', () => {
+test('renders app', () => {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn().mockImplementation(query => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // deprecated
+      removeListener: jest.fn(), // deprecated
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    })),
+  });
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
+  const linkElement = screen.getByText(/ProgrammerHumor Top20 Topics/i);
   expect(linkElement).toBeInTheDocument();
 });

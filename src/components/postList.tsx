@@ -1,4 +1,4 @@
-import { List, Space, Tooltip, Image, message, Card, Popover, Badge } from "antd";
+import { List, Space, Tooltip, Image, message, Avatar} from "antd";
 import {
 	MessageOutlined,
 	LikeOutlined,
@@ -9,10 +9,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { GetDefaultTopPosts } from "../api/reddit.service";
 import { Post } from "../models/post.model";
-import styled from "styled-components";
 import { map, orderBy } from "lodash";
 import { Award } from "../models/award.model";
-import Avatar from "antd/lib/avatar/avatar";
+import { GoldAwardBadge, PlaceBadge, StyledPopover, StyleListItem } from "./styled.component";
 const { Meta } = List.Item;
 
 const PostList = () => {
@@ -23,65 +22,20 @@ const PostList = () => {
 	useEffect(() => {
 		GetDefaultTopPosts()
 			.then((data: any) => {
-				let topPostsResult = orderBy(map(
+				const topPostsResult = orderBy(map(
 					data.data.children,
 					(postData: any) => new Post(postData.data)
 				), ['commentsCount'], ['desc']);
 				setTopPosts(topPostsResult);
 			})
 			.catch((error) => {
-				message.error(error);
+				message.error("An error occured while getting top topics.");
+				setTopPosts([]);
 			})
 			.finally(() => {
 				setLoader(false);
 			});
 	}, []);
-
-	const orange = "#f5d9c7";
-	const blue = "#c0cddb";
-	const gold = "#D4AF37";
-	const silver = "#87868c";
-	const bronze = "#A97142";
-
-	const StyleListItem = styled(List.Item) <{ score: number, place: number }>`
-		background-color: ${(props) => (props.score % 2 === 0 ? orange : blue)};
-		.ant-list-item-main {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-		}
-		.ant-list-item-meta {
-			flex: initial;
-			margin-bottom: 0;
-		}
-		.ant-list-item-meta-title,
-		.ant-list-item-meta-description {
-			text-align: start;
-		}
-		.ant-list-item-action {
-			margin-left: ${ (props) => ((props.place === 1 ? 50 : (props.place === 2 ? 40 : (props.place === 3 ? 35 : 24))) + 16)}px;
-			display: flex;
-			justify-content: start;
-		}
-	`;
-
-	const GoldAwardBadge = styled(Badge)`
-		.ant-badge-count {
-			background-color: ${gold};
-		}
-	`;
-
-	const StyledPopover = styled(Popover)`
-		cursor: pointer;
-	`;
-
-	const PlaceBadge = styled(Avatar) <{ place: number }>`
-		width: ${ (props) => (props.place === 1 ? 50 : (props.place === 2 ? 40 : (props.place === 3 ? 35 : 24)))}px;
-		height: ${ (props) => (props.place === 1 ? 50 : (props.place === 2 ? 40 : (props.place === 3 ? 35 : 24)))}px;
-		line-height: ${ (props) => (props.place === 1 ? 50 : (props.place === 2 ? 40 : (props.place === 3 ? 35 : 24)))}px;
-		font-size: ${ (props) => (props.place < 4 ? 18 : 14)}px;
-		background: ${ (props) => (props.place === 1 ? gold : (props.place === 2 ? silver : (props.place === 3 ? bronze : "#ccc")))};
-	`;
 
 	type IconTextProps = {
 		icon: any;
@@ -97,7 +51,6 @@ const PostList = () => {
 	type AwardsIconTextProps = IconTextProps & {
 		awards: Array<Award>
 	};
-
 	const AwardsIconText = ({ icon, text, awards }: AwardsIconTextProps) => (
 		<div>
 			{ awards.length > 0 

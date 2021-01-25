@@ -16,6 +16,7 @@
     "@types/styled-components": "^5.1.7",
     "antd": "^4.10.3",
     "dayjs": "^1.10.4",
+    "jest-fetch-mock": "^3.0.3",
     "lodash": "^4.17.20",
     "promise-polyfill": "^8.2.0",
     "react": "^17.0.1",
