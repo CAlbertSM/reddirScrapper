@@ -8,7 +8,8 @@ const silver = "#87868c";
 const bronze = "#A97142";
 
 export const StyleListItem = styled(List.Item) <{ score: number, place: number }>`
-		background-color: ${(props) => (props.score % 2 === 0 ? orange : blue)};
+        background-color: ${(props) => (props.score % 2 === 0 ? orange : blue)};
+        margin: 16px 24px;
 		.ant-list-item-main {
 			display: flex;
 			flex-direction: column;
